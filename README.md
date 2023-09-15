@@ -1,7 +1,10 @@
 
 # Fortiadc Ingress Controller
 Below content is the basic know-how and quick start for FortiADC Ingress Controller.
-For more much details, please refer to the [official document](https://docs.fortinet.com/document/fortiadc/latest/fortiadc-ingress-controller-1-0/).
+For more much details, please refer to the official document.
+
+ - [FortiADC Ingress Controller for Kubernetes clusters](https://docs.fortinet.com/document/fortiadc/7.4.0/fortiadc-ingress-controller-kubernetes-deployment-guide/518751/prerequisite-knowledge)
+ - [FortiADC Ingress Controller for OpenShift ](https://docs.fortinet.com/document/fortiadc/7.4.0/fortiadc-ingress-controller-openshift-deployment-guide/518751/prerequisite-knowledge)
 
 </br>
 </br>
@@ -30,7 +33,7 @@ FortiADC, as the Ingress-managed load balancer, not only provides flexibility in
     <thead>
         <tr>
             <th>Product</th>
-            <th colspan=4>Version</th>   
+            <th colspan=5>Version</th>   
         </tr>
     </thead>
     <tbody>
@@ -40,21 +43,23 @@ FortiADC, as the Ingress-managed load balancer, not only provides flexibility in
             <td>1.0.1</td>
             <td>1.0.2</td>
             <td>2.0.0</td>
+            <td>2.0.1</td>
         </tr>
         <tr>
             <td>Kubernetes</td>
             <td>1.19.8-1.23.x</td>
             <td>1.19.8-1.24.x</td>
             <td colspan=2>1.19.8-1.27.x</td>
+            <td>1.19.8-1.28.x</td>
         </tr>
         <tr>
             <td>FortiADC</td>
-            <td colspan=4>5.4.5 - 7.4.x*</td>
+            <td colspan=5>5.4.5 - 7.4.x*</td>
         </tr>
 	    <tr>
             <td>Openshift Container platform</td>
             <td colspan=3>Not supported</td>
-            <td> 4.7-4.12.x</td>
+            <td colspan=2> 4.7-4.12.x</td>
         </tr>
     </tbody>
 </table>
