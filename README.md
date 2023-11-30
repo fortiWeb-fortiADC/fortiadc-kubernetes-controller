@@ -64,8 +64,12 @@ FortiADC, as the Ingress-managed load balancer, not only provides flexibility in
     </tbody>
 </table>
 
->**Note** 
+>[!NOTE]
 >Some features for FortiADC Ingress Controller version >= 2.0.0 require FortiADC version >= 7.4.0 to support. Please check the [release notes](https://github.com/fortinet/fortiadc-ingress/blob/main/Release-Notes.md).
+
+>[!WARNING]
+>When using FortiADC Ingress Controller 2.0.x, the Ingress related objects on FortiADC (including virtual servers, content routing, real server pools, and real servers) will be fully managed by the Ingress Controller. This means that any virtual server, content routing, real server pool or real server object that is not deployed by FortiADC Ingress Controller will be removed automatically.
+
 ## Supported Environment
 The FortiADC Ingress Controller has been verified to run in the Openshift Cluster in Openshift Container Platform environment and Kubernetes cluster in the below environments:
 | Environment | Tools for Building |
