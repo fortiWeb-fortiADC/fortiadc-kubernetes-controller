@@ -33,6 +33,14 @@ rules:
   - ingresses/status
   verbs:
   - update
+- apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
+  verbs:
+  - get
+  - list
+  - watch
 {{- if eq .Values.parameters.openshiftRouteSupport "yes" }}
 - apiGroups:
   - route.openshift.io
@@ -52,7 +60,20 @@ rules:
   - watch
   - update
 {{- end }}
-
+- apiGroups: ["fadk8sctrl.fortinet.com"]
+  resources: ["virtualservers"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["fadk8sctrl.fortinet.com"]
+  resources: ["virtualservers/status"]
+  verbs: ["get", "update", "patch"]
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+  - list
+  - watch
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
