@@ -5,7 +5,7 @@
 image:
   repository: fortinet/qa-fortiadc-ingress-new
   pullPolicy: IfNotPresent
-  tag: "3.0.0.2"
+  tag: "3.0.0.3"
 
 nameOverride: ""
 fullnameOverride: ""
