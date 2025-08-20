@@ -12,7 +12,7 @@ metadata:
     fadcr: "true"
 spec:
   addressType: ipv4
-  address: 192.168.1.102
+  address: 192.168.1.105
   port: 443
   interface: port1
   loadBalanceProfile: LB_PROF_HTTPS
@@ -34,7 +34,7 @@ spec:
       host: "foo.bar.com"
       path: /info
       pathType: Prefix
-      RealServerPool:
+      realServerPool:
         service: service1
         servicePort: 1241
         serviceNamespace: default
@@ -42,7 +42,7 @@ spec:
       host: "*.foo.com"
       path: /hello
       pathType: Prefix
-      RealServerPool:
+      realServerPool:
         service: service2
         servicePort: 1242
         serviceNamespace: default
