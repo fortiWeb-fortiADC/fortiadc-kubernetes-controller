@@ -1,3 +1,6 @@
+{{- if and (not .Values.webhook.useCertManager) (not .Values.webhook.tlsSecretName) }}
+{{- fail "If webhook.useCertManager is false, you must provide webhook.tlsSecretName to use an existing Secret." }}
+{{- end }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,6 +31,9 @@ spec:
       volumes:
         - name: temp-storage
           emptyDir: {}
+        - name: tls
+          secret:
+            secretName: {{ .Values.webhook.tlsSecretName }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -42,7 +48,12 @@ spec:
               drop: ["ALL"]
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.webhook.service.targetPort }}
           volumeMounts:
+            - name: tls
+              mountPath: /certs
+              readOnly: true
             - name: temp-storage
               mountPath: /apptmp
           env:
@@ -64,7 +75,6 @@ spec:
             value: "{{ .Values.parameters.openshiftRouteSupport }}"
           - name: EnableStaticRouteSupport
             value: "{{ .Values.parameters.enableStaticRouteSupport }}"
-
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
