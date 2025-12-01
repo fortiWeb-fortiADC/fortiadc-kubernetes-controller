@@ -11,24 +11,23 @@ For more much details, please refer to the official document.
 
 ![FortiADC Kubernetes Controller Overview](https://github.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/blob/main/figures/fadc-k8s-controller-overview.png?raw=true)
 
-The FortiADC Kubernetes Controller manages both standard Kubernetes Ingress resources and Fortinet-defined VirtualServer custom resources. It enables you to control FortiADC configurations directly from within Kubernetes. The controller runs as a container within a pod deployed in your Kubernetes cluster. The list below outlines the major functionalities of the FortiADC Kubernetes Controller: 
+The FortiADC Kubernetes Controller manages both standard Kubernetes Ingress resources and Fortinet-defined custom resources (such as VirtualServer, RemoteServer, and Host). It enables you to control FortiADC configurations directly from within Kubernetes. The controller runs as a container within a pod deployed in your Kubernetes cluster. The list below outlines the major functionalities of the FortiADC Kubernetes Controller: 
 
- - To list and watch Ingress/Custom resource related resources, such as Ingress, Fortinet-defined VirtualServer, Service, Node, Pod and Secret. 
- - To convert Ingress/Fortinet-defined VirtualServer related resources to FortiADC objects, such as virtual server, content routing, real server pool, and more.
- - To handle Add/Update/Delete events for watched Ingress/Fortinet-defined VirtualServer resources and automatically implement corresponding actions on FortiADC.
+ - To list and watch Ingress/Custom resource related resources, such as Ingress, VirtualServer, RemoteServer, Host, Service, Node, Pod and Secret. 
+ - To convert Ingress/Fortinet-defined custom resources related resources to FortiADC objects, such as virtual server, content routing, real server pool, and more.
+ - To handle Add/Update/Delete events for watched Ingress/Fortinet-defined custom resources and automatically implement corresponding actions on FortiADC.
 
 
  ![Ingress](https://github.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/blob/main/figures/fad-k8s-controller-flow.png?raw=true)
 
+The FortiADC Kubernetes Controller integrates Kubernetes native routing with FortiADC’s advanced traffic management and security features like WAF, antivirus scanning, and DoS protection—helping secure web services inside the cluster.
 
+The VirtualServer custom resource (v1alpha2) extends the standard Ingress by supporting both Layer 7 (HTTP/HTTPS) and Layer 4 (TCP/UDP) traffic, and allows detailed configuration of FortiADC virtual server features.
 
-Kubernetes Ingress is an API resource that manages external access to cluster services, typically HTTP/HTTPS traffic, providing features like load balancing, SSL termination, and name-based virtual hosting.
+The RemoteServer and Host custom resource allow detailed configuration of FortiADC GLB features. The RemoteServer supports managing both FortiADC instances and third-party servers. The Host provides a DNS-based solution to distribute network traffic to multiple servers across geographic regions.
 
-The VirtualServer custom resource extends the standard Ingress model, enabling more comprehensive utilization of FortiADC’s virtual server features by allowing detailed parameters to be specified directly in the resource specification. Moreover, The VirtualServer custom resource version v1alpha2 supports not only Layer 7 (HTTP/HTTPS) but also Layer 4 (TCP/UDP) servers in Kubernetes.
+Additional features such as health checks, traffic log management, and FortiView enhance visibility and manageability of both Ingress and VirtualServer resources.
 
-The FortiADC Kubernetes Controller bridges Kubernetes native routing capabilities with FortiADC’s advanced traffic management and security features such as Web Application Firewall (WAF), Antivirus Scanning, and Denial of Service (DoS) prevention to protect the web server resources in the Kubernetes cluster, enabling seamless integration of both.
-
-Other features such as health check, traffic log management, and FortiView on FortiADC facilitates the management of the Kubernetes ingress and the VirtualServer custom resources.
 
 ## Supported Release and Version
 
@@ -77,7 +76,7 @@ Other features such as health check, traffic log management, and FortiView on Fo
 </table>
 
 >[!NOTE]
->Some features for FortiADC Kubernetes Controller version >= 2.0.0 require FortiADC version >= 7.4.0 to support. Please check the [release notes](https://github.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/blob/main/Release-Notes.md).
+>Some features of the FortiADC Kubernetes Controller require a corresponding version of FortiADC support. Please check the [release notes](https://github.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/blob/main/Release-Notes.md).
 
 >[!WARNING]
 >When using FortiADC Kubernetes Controller 2.0.x, the Ingress related objects on FortiADC (including virtual servers, content routing, real server pools, and real servers) will be fully managed by the Ingress Controller. This means that any virtual server, content routing, real server pool or real server object that is not deployed by FortiADC Ingress Controller will be removed automatically.
@@ -104,6 +103,7 @@ To ensure you use an API version of Kubernetes objects that the FortiADC Kuberne
 | ServiceAccount | v1 |
 | Deployment | apps/v1 |
 | ReplicaSet | apps/v1 |
+| DaemonSets | apps/v1 |
 | Endpoints | v1 |
 | Endpointslices | discovery.k8s.io |
 | Event | v1 |
@@ -235,15 +235,15 @@ Configuration parameters are required to be specified in the Ingress annotation 
 | virtual-server-fortigslb-hostname | The **Host Name** option is available if **One Click GSLB Server** is enabled. Enter the hostname part of the FQDN, such as `www`. **Note:** You can specify the @ symbol to denote the zone root. The value substitute for @ is the preceding $ORIGIN directive. | |
 | virtual-server-fortigslb-domainname | The **Domain Name** option is available if **One Click GSLB Server** is enabled. The domain name must end with a period. For example,`example.com.` | |
 
-## Annotation in VirtualServer/GSLB
-Configuration parameters are required to be specified in the VirtualServer annotation to enable the FortiADC Kubernetes Controller to determine how to deploy the VirtualServer resource.
+## Annotation in Fortinet-defined CRD
+Configuration parameters are required to be specified in the Fortinet-defined CRD annotation to enable the FortiADC Kubernetes Controller to determine how to deploy the VirtualServer, RemoteServer, and Host resource.
 
 |Parameter  | Description | Default |
 |--|--|--|
-| fortiadc-ip | The VirtualServer will be deployed on the FortiADC with the given IP address or domain name. <br> **Note**: This parameter is **required**. | |
+| fortiadc-ip | The VirtualServer/RemoteServer/Host will be deployed on the FortiADC with the given IP address or domain name. <br> **Note**: This parameter is **required**. | |
 | fortiadc-admin-port | FortiADC https service port. | 443|
 | fortiadc-login | The Kubernetes secret name preserves the FortiADC authentication information. <br> **Note**: This parameter is **required**. | |
-| fortiadc-ctrl-log | Enable/disable the FortiADC Kubernetes Controller log. Once enabled, the FortiADC Kubernetes Controller will print the verbose log the next time the VirtualServer is updated. |enable |
+| fortiadc-ctrl-log | Enable/disable the FortiADC Kubernetes Controller log. Once enabled, the FortiADC Kubernetes Controller will print the verbose log the next time the VirtualServer/RemoteServer/Host is updated. |enable |
 
 ## Annotation in Service
 
@@ -304,20 +304,20 @@ Download the simple-fanout-example.yaml
 
     curl -k https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/ingress_examples/simple-fanout-example.yaml -o simple-fanout-example.yaml
 
-Modify the Ingress Annotation in simple-fanout-example.yaml to accommodate to your environment, ex: fortiadc-ip, virtual-server-ip, etc.. Then deploy the ingress with kubectl command
+Modify the Ingress Annotation in simple-fanout-example.yaml to accommodate to your environment, ex: fortiadc-ip, virtual-server-ip, etc. Then deploy the ingress with kubectl command
 
     kubectl apply -f simple-fanout-example.yaml
 
 :bulb: You can use VirtualServer to replace with Ingress.
 
-    curl -k https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/virtualserver_simple_fanout.yaml -o virtualserver-simple-fanout-example.yaml
+    curl -k https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/virtualserver/virtualserver_simple_fanout.yaml -o virtualserver-simple-fanout-example.yaml
 
 
-Modify the VirtualServer Annotation in virtualserver-simple-fanout-example.yaml to accommodate to your environment, ex: fortiadc-ip, fortiadc-admin-port, etc.. Then deploy the virtualserver with kubectl command
+Modify the VirtualServer Annotation in virtualserver-simple-fanout-example.yaml to accommodate to your environment, ex: fortiadc-ip, fortiadc-admin-port, etc. Then deploy the virtualserver with kubectl command
 
     kubectl apply -f virtualserver-simple-fanout-example.yaml
 
-Check the deployed Ingress with FortiView
+Check the deployed Ingress/VirtualServer with FortiView
 
 ![fortiview_topology](https://github.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/blob/main/figures/fortiview_topology.png?raw=true)
 
@@ -363,9 +363,9 @@ Modify the Service Annotation in postgresql_ssl_service.yaml to accommodate to y
 Download the virtualserver_postgres_ssl.yaml
 
 
-    curl -k https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/virtualserver_postgres_ssl.yaml -o virtualserver_postgres_ssl.yaml
+    curl -k https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/virtualserver/virtualserver_postgres_ssl.yaml -o virtualserver_postgres_ssl.yaml
 
-Modify the VirtualServer Annotation in virtualserver_postgres_ssl.yaml to accommodate to your environment, ex: fortiadc-ip, fortiadc-admin-port, etc.. Also, modify the VirtualServer Spec, ex: address, contentRoutings.SourceAddress.  Then deploy the virtualserver with kubectl command
+Modify the VirtualServer Annotation in virtualserver_postgres_ssl.yaml to accommodate to your environment, ex: fortiadc-ip, fortiadc-admin-port, etc. Also, modify the VirtualServer Spec, ex: address, contentRoutings.SourceAddress.  Then deploy the virtualserver with kubectl command
 
     kubectl apply -f virtualserver_postgres_ssl.yaml
 
@@ -415,19 +415,43 @@ FQDN and DC are deployed under the namespace default.
 The cleint receives the DNS response with IP from the closer virtual server.
 
 
+### Setup the GLB settings
+Before starting to deploy GLB-related CRDs, we need to make sure that the GLB function in FortiADC is operational. 
+ - Enable the Global DNS Configuration in General Settings
+ - Create two virtual servers, v1 and v2 to let fortiadc-rs1 discover
+
 ### Deploy the Servers
+
+Download the following YAML files: remoteserver_slb.yaml and remoteserver_host.yaml
+
+
+    curl -k https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/glb/remoteserver_slb.yaml -o remoteserver_slb.yaml
+
+    curl -k https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/glb/remoteserver_host.yaml -o remoteserver_host.yaml
+
+Modify the RemoteServer Annotation in remoteserver_slb.yaml and remoteserver_host.yaml to accommodate to your environment, ex: fortiadc-ip, fortiadc-admin-port, etc. Also, modify the RemoteServer Spec, ex: ip, authType, virtualServers. Then deploy the remoteserver with kubectl command
 
 dc1:
 
-    kubectl apply -f https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/remoteserver_slb.yaml
+    kubectl apply -f remoteserver_slb.yaml
 dc2:
 
-    kubectl apply -f https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/remoteserver_host.yaml
+    kubectl apply -f remoteserver_host.yaml
 
 ### Deploy the Host to expose the service
 
-    kubectl apply -f https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/host.yaml
+Download the following YAML files: host.yaml
+
+    curl -k https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/customResource/glb/host.yaml -o host.yaml
+
+Modify the Host Annotation in host.yaml to accommodate to your environment, ex: fortiadc-ip, fortiadc-admin-port, etc. Also, modify the Host Spec, ex: policys, virtualServerPools. Then deploy the host with kubectl command
+
+    kubectl apply -f host.yaml
 
 Check the deployed GLB with FortiView
 ![fortiview_topology](https://github.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/blob/main/figures/glb_fortiview.png?raw=true)
 
+Try to access FQDN use dig tool.
+
+    dig @192.168.1.108 www.host1.com +short
+    20.20.20.2
