@@ -183,7 +183,7 @@ Check the log of the FortiADC Kubernetes Controller.
 
 ### Upgrading from 3.1.x to 3.2.x
 
-3.1.x charts do not contain the Gateway API CRDs, so a plain `helm upgrade` to 3.2.x will leave the cluster without the `GatewayClass` / `Gateway` / `HTTPRoute` CRDs. The controller pod will fail to register the Gateway API informers on startup and repeatedly restart until the CRDs are present. Install the Gateway API CRDs **before** running `helm upgrade`:
+3.1.x charts do not contain the Gateway API CRDs, so a plain `helm upgrade` to 3.2.x will leave the cluster without the `GatewayClass` / `Gateway` / `HTTPRoute` CRDs. The controller pod will fail to register the Gateway API informers on startup. Install the Gateway API CRDs **before** running `helm upgrade`:
 
     # 1. Install the Gateway API CRDs shipped with the 3.2.x chart
     kubectl apply -f https://raw.githubusercontent.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/main/charts/fadc-k8s-ctrl-3.2.0/crds/gatewayclass.yaml
@@ -197,7 +197,7 @@ Check the log of the FortiADC Kubernetes Controller.
     helm repo update
     helm upgrade --devel --debug --reset-values -n fortiadc-ingress first-release fortiadc-kubernetes-controller/fadc-k8s-ctrl
 
-If you already have the Gateway API CRDs installed in the cluster (for example, shared with another controller such as Istio or Envoy Gateway), `kubectl apply -f` is idempotent and only updates the schema — it will not delete your existing `Gateway` / `HTTPRoute` instances.
+If you already have the Gateway API CRDs installed in the cluster), `kubectl apply -f` is idempotent and only updates the schema — it will not delete your existing `Gateway` / `HTTPRoute` instances.
 
 >[!WARNING]
 > Gateway API support is detected **once at controller startup**. If the controller pod is already running when the CRDs are absent, its log will show `Gateway API CRDs not found in cluster, disabling Gateway support`, and applying the CRDs afterwards will not turn Gateway support on — the running process never re-checks. If you see that message on a running controller, restart the pod after the CRDs are established:
