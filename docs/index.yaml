@@ -2,19 +2,19 @@ apiVersion: v1
 entries:
   fadc-k8s-ctrl:
   - apiVersion: v2
-    appVersion: 3.2.0-151
-    created: "2026-08-06T14:41:21.145914061-07:00"
+    appVersion: 3.2.0-152
+    created: "2026-08-12T11:16:14.50345833-07:00"
     description: A Helm chart for FortiADC Kubernetes Controller
-    digest: 4df9eae04a399ab1b1b09809e5c1bd59d773c525fe9fe527095df5cff404c44e
+    digest: 50de61cea317cb8fc2e925c7ca46d672c5a032985d71ae1883ecfe5e0c95a655
     kubeVersion: '>= 1.19.8-0, <= 1.36-0'
     name: fadc-k8s-ctrl
     type: application
     urls:
-    - https://github.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/raw/main/docs/fadc-k8s-ctrl-3.2.0-151.tgz
-    version: 3.2.0-151
+    - https://github.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/raw/main/docs/fadc-k8s-ctrl-3.2.0-152.tgz
+    version: 3.2.0-152
   - apiVersion: v2
     appVersion: 3.1.0
-    created: "2026-08-06T14:41:21.142504414-07:00"
+    created: "2026-08-12T11:16:14.501028823-07:00"
     description: A Helm chart for FortiADC Kubernetes Controller
     digest: bd63c234aa182991f3cfa986593fee069f79e50b9c416782150d02827d3649ce
     kubeVersion: '>= 1.19.8-0, <= 1.35-0'
@@ -25,7 +25,7 @@ entries:
     version: 3.1.0
   - apiVersion: v3
     appVersion: 3.0.0
-    created: "2026-08-06T14:41:21.142096513-07:00"
+    created: "2026-08-12T11:16:14.500607512-07:00"
     description: A Helm chart for FortiADC Kubernetes Controller
     digest: ddc0f2f9248755e6011158da5c3abaf85c98aacac17801e8a901be741dbe9a07
     kubeVersion: '>= 1.19.8-0, <= 1.33-0'
@@ -36,7 +36,7 @@ entries:
     version: 3.0.0
   - apiVersion: v2
     appVersion: 2.0.3
-    created: "2026-08-06T14:41:21.141850263-07:00"
+    created: "2026-08-12T11:16:14.500338101-07:00"
     description: A Helm chart for FortiADC Ingress Controller
     digest: 281a1c3db66e00c4fd95b43f07f3a02f30b356bba544e98b697ae41edbc3da2c
     kubeVersion: '>= 1.19.8-0, <= 1.32-0'
@@ -47,7 +47,7 @@ entries:
     version: 2.0.3
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2026-08-06T14:41:21.141643148-07:00"
+    created: "2026-08-12T11:16:14.500091341-07:00"
     description: A Helm chart for FortiADC Ingress Controller
     digest: 55676629a6ca96e5b740e46a0489566ae6571dd7bfa5c1070aebfd36e24a5117
     kubeVersion: '>= 1.19.8-0, <= 1.28-0'
@@ -58,7 +58,7 @@ entries:
     version: 2.0.1
   - apiVersion: v2
     appVersion: 2.0.0
-    created: "2026-08-06T14:41:21.141452434-07:00"
+    created: "2026-08-12T11:16:14.499850659-07:00"
     description: A Helm chart for FortiADC Ingress Controller
     digest: 82c6439541f4182ad4a19094e2ed0d41bca903de345ab0102b22735ff4e35cbc
     kubeVersion: '>= 1.19.8-0, <= 1.27-0'
@@ -69,7 +69,7 @@ entries:
     version: 2.0.0
   - apiVersion: v2
     appVersion: 1.0.2
-    created: "2026-08-06T14:41:21.141259369-07:00"
+    created: "2026-08-12T11:16:14.499377087-07:00"
     description: A Helm chart for FortiADC Ingress Controller
     digest: 909e43e988491ffbc1c28362e6b2a363c1a4dc04b2eee541922fa4c4ee2cc855
     kubeVersion: '>= 1.19.8-0, <= 1.27-0'
@@ -80,7 +80,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 1.0.1
-    created: "2026-08-06T14:41:21.141067675-07:00"
+    created: "2026-08-12T11:16:14.496053898-07:00"
     description: A Helm chart for FortiADC Ingress Controller
     digest: 2f44ff7c32e02347063885d524d658f946dcccf5b738e9c255825b17e89aaf74
     kubeVersion: '>= 1.19.8-0, <= 1.24-0'
@@ -91,7 +91,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-08-06T14:41:21.1408905-07:00"
+    created: "2026-08-12T11:16:14.495861263-07:00"
     description: A Helm chart for FortiADC Ingress Controller
     digest: 61d443ca6fd89bb47d156a34c7d19d3a9654bf18736631e3ba340cdf4724a0ce
     kubeVersion: '>= 1.19.8-0, <= 1.23-0'
@@ -100,4 +100,4 @@ entries:
     urls:
     - https://github.com/fortiWeb-fortiADC/fortiadc-kubernetes-controller/raw/main/docs/fadc-k8s-ctrl-1.0.0.tgz
     version: 1.0.0
-generated: "2026-08-06T14:41:21.140524897-07:00"
+generated: "2026-08-12T11:16:14.495488288-07:00"
