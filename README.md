@@ -210,7 +210,14 @@ If you already have the Gateway API CRDs installed in the cluster), `kubectl app
 
 If a future 3.2.x chart updates the Gateway API CRD schemas, re-run the `kubectl apply -f crds/` step above to refresh the CRDs, then `helm upgrade`. The Fortinet-defined CRDs under `templates/` are updated automatically by `helm upgrade` and do not need a separate step.
 
+### Controller upgrade to 3.2 followed by FADC upgrade to 8.0.4 or later
 
+If you upgrade the controller to 3.2 while the FortiADC firmware is still older than 8.0.4, and **then** upgrade FortiADC to version 8.0.4 or later, you must restart the controller pod to trigger a full synchronization:
+
+    kubectl -n [namespace] rollout restart deployment/[FortiADC Kubernetes Controller deployment name]
+
+>[!NOTE]
+> Scripting objects that already exist on FortiADC with a human-readable name that was truncated due to the pre-8.0.4 name length limit are **not** deleted by the controller. This safeguard protects user-defined scripting objects from accidental removal. After the restart, the controller will create new scripting objects with hashed names (and aliases holding the full human-readable name).
 
 ## Uninstall Chart
 
