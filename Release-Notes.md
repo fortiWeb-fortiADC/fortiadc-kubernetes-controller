@@ -1,4 +1,4 @@
-# FortiADC Ingress Controller Release Notes
+# FortiADC Kubernetes Controller Release Notes
 
 ## 3.2.0
 ### What's New
